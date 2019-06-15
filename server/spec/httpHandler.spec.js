@@ -11,8 +11,8 @@ const httpHandler = require('../js/httpHandler');
 describe('server responses', () => {
 
   it('should respond to a OPTIONS request', (done) => {
-    let {req, res} = server.mock('/', 'OPTIONS');
-
+    let {req, res} = server.mock('http://127.0.0.1:3000', 'OPTIONS');
+    
     httpHandler.router(req, res);
     expect(res._responseCode).to.equal(200);
     expect(res._ended).to.equal(true);
@@ -23,12 +23,17 @@ describe('server responses', () => {
 
   it('should respond to a GET request for a swim command', (done) => {
     // write your test here
-    done();
+    let {req, res} = server.mock('http://127.0.0.1:3000', 'GET');
+    httpHandler.router(req, res, () => {
+      expect(res._responseCode).to.equal(200);
+      expect(res._ended).to.equal(true);
+      done();
+    });
   });
 
   xit('should respond with 404 to a GET request for a missing background image', (done) => {
     httpHandler.backgroundImageFile = path.join('.', 'spec', 'missing.jpg');
-    let {req, res} = server.mock('FILL_ME_IN', 'GET');
+    let {req, res} = server.mock('http://127.0.0.1:3000', 'GET');
 
     httpHandler.router(req, res, () => {
       expect(res._responseCode).to.equal(404);

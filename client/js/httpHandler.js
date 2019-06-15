@@ -1,9 +1,19 @@
+import { callbackify } from "util";
+var SwimTeam = require('./swimTeam.js');
+
 (function() {
 
   const serverUrl = 'http://127.0.0.1:3000';
 
   //
   // TODO: build the swim command fetcher here
+  const getSwimDirection = () => {
+    $.ajax({
+      type: 'GET',
+      url = serverUrl,
+      success: SwimTeam.move(direction)
+    })
+  }
   //
 
   /////////////////////////////////////////////////////////////////////
@@ -17,7 +27,7 @@
     $.ajax({
       type: 'POST',
       data: formData,
-      url: 'FILL_ME_IN',
+      url: serverUrl,
       cache: false,
       contentType: false,
       processData: false,
